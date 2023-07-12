@@ -10,7 +10,7 @@ namespace YTBrotDemo
     internal static class Mandelbrot
     {
 
-        public static double Iterate((double a, double b) c, int maxIt)
+        private static double Iterate((double a, double b) c, int maxIt)
         {
             (double a, double b) z = (0, 0), zs = (0, 0);
             double oldm = 0, m;
@@ -50,7 +50,7 @@ namespace YTBrotDemo
         }
 
 
-        public static Bitmap Partial(int threads, int tn, Context con, CancellationToken token)
+        private static Bitmap Partial(int threads, int tn, Context con, CancellationToken token)
         {
             Bitmap bm = con.NewBitmap();
             for (int y = tn; y < con.Height && !token.IsCancellationRequested; y += threads)
