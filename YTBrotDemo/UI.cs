@@ -1,3 +1,4 @@
+using System.Drawing;
 using System.IO.Compression;
 
 namespace YTBrotDemo
@@ -45,11 +46,6 @@ namespace YTBrotDemo
             ShowPreview();
         }
 
-        private void SetContext()
-        {
-            context.SetValues(PaletteScale, ViewOffsetA, ViewOffsetB, Zoom, PreviewControl.Width, PreviewControl.Height, MaxIterations);
-        }
-
         private static Color[] CreatePalette()
         {
             // black -> yellow -> red -> magenta -> blue -> cyan -> black
@@ -92,7 +88,6 @@ namespace YTBrotDemo
                 PreviewControl.BackgroundImage = await Mandelbrot.Render(context, Threads, cts.Token);
                 Busy(false);
             }
-
         }
 
         private void ShowPreview()
@@ -101,6 +96,11 @@ namespace YTBrotDemo
             {
                 previewTask = RenderSet();
             }
+        }
+
+        private void SetContext()
+        {
+            context.SetValues(PaletteScale, ViewOffsetA, ViewOffsetB, Zoom, PreviewControl.Width, PreviewControl.Height, MaxIterations);
         }
 
         private void RenderButton_Click(object sender, EventArgs e)
@@ -116,10 +116,9 @@ namespace YTBrotDemo
         private void PreviewControl_MouseClick(object sender, MouseEventArgs e)
         {
             SetContext();
-            switch(e.Button) 
+            switch (e.Button)
             {
-                default:
-                    return;
+                default: return;
                 case MouseButtons.Left:
                     Zoom++;
                     break;

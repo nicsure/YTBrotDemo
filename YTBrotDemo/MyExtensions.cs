@@ -21,7 +21,7 @@ namespace YTBrotDemo
 
         public static void SafeCancel(this CancellationTokenSource cts)
         {
-            try { cts.Cancel(); } catch (ObjectDisposedException) { }   
+            try { cts.Cancel(); } catch (ObjectDisposedException) { }
         }
 
     }
