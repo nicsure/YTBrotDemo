@@ -28,7 +28,6 @@ namespace YTBrotDemo
             palScale = pscale;
             offsetA = offa;
             offsetB = offb;
-            mag = zoom;
             width = w;
             height = h;
             maxIt = max;

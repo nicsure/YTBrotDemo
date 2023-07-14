@@ -222,11 +222,12 @@
             // ZoomControl
             // 
             ZoomControl.AutoSize = true;
+            ZoomControl.DecimalPlaces = 2;
             ZoomControl.Dock = DockStyle.Right;
             ZoomControl.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            ZoomControl.Location = new Point(1775, 183);
+            ZoomControl.Location = new Point(1743, 183);
             ZoomControl.Name = "ZoomControl";
-            ZoomControl.Size = new Size(80, 39);
+            ZoomControl.Size = new Size(112, 39);
             ZoomControl.TabIndex = 1;
             ZoomControl.TextAlign = HorizontalAlignment.Right;
             // 
