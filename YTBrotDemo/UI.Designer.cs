@@ -39,19 +39,22 @@
             ViewOffsetAControl = new NumericUpDown();
             ViewOffsetBControl = new NumericUpDown();
             PaletteScaleControl = new NumericUpDown();
-            ZoomControl = new NumericUpDown();
             ThreadsControl = new NumericUpDown();
             PreviewControl = new PictureBox();
             RenderButton = new Button();
             AbortButton = new Button();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            ZoomControl = new NumericUpDown();
+            label7 = new Label();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)MaxIterationsControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ViewOffsetAControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ViewOffsetBControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PaletteScaleControl).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ZoomControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ThreadsControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PreviewControl).BeginInit();
+            tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)ZoomControl).BeginInit();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -70,15 +73,15 @@
             tableLayoutPanel1.Controls.Add(ViewOffsetAControl, 2, 1);
             tableLayoutPanel1.Controls.Add(ViewOffsetBControl, 2, 2);
             tableLayoutPanel1.Controls.Add(PaletteScaleControl, 2, 3);
-            tableLayoutPanel1.Controls.Add(ZoomControl, 2, 4);
             tableLayoutPanel1.Controls.Add(ThreadsControl, 2, 5);
             tableLayoutPanel1.Controls.Add(PreviewControl, 0, 0);
-            tableLayoutPanel1.Controls.Add(RenderButton, 2, 6);
-            tableLayoutPanel1.Controls.Add(AbortButton, 1, 6);
+            tableLayoutPanel1.Controls.Add(RenderButton, 2, 7);
+            tableLayoutPanel1.Controls.Add(AbortButton, 1, 7);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 2, 4);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 7;
+            tableLayoutPanel1.RowCount = 8;
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
@@ -86,6 +89,7 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.Size = new Size(1858, 1136);
             tableLayoutPanel1.TabIndex = 0;
             // 
@@ -142,11 +146,11 @@
             label5.AutoSize = true;
             label5.Dock = DockStyle.Right;
             label5.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label5.Location = new Point(1368, 180);
+            label5.Location = new Point(1405, 180);
             label5.Name = "label5";
-            label5.Size = new Size(201, 45);
+            label5.Size = new Size(164, 45);
             label5.TabIndex = 0;
-            label5.Text = "Magnification 2^";
+            label5.Text = "Magnification";
             label5.TextAlign = ContentAlignment.MiddleRight;
             // 
             // label6
@@ -219,18 +223,6 @@
             PaletteScaleControl.TextAlign = HorizontalAlignment.Right;
             PaletteScaleControl.Value = new decimal(new int[] { 15, 0, 0, 0 });
             // 
-            // ZoomControl
-            // 
-            ZoomControl.AutoSize = true;
-            ZoomControl.DecimalPlaces = 2;
-            ZoomControl.Dock = DockStyle.Right;
-            ZoomControl.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            ZoomControl.Location = new Point(1743, 183);
-            ZoomControl.Name = "ZoomControl";
-            ZoomControl.Size = new Size(112, 39);
-            ZoomControl.TabIndex = 1;
-            ZoomControl.TextAlign = HorizontalAlignment.Right;
-            // 
             // ThreadsControl
             // 
             ThreadsControl.AutoSize = true;
@@ -252,7 +244,7 @@
             PreviewControl.Dock = DockStyle.Fill;
             PreviewControl.Location = new Point(3, 3);
             PreviewControl.Name = "PreviewControl";
-            tableLayoutPanel1.SetRowSpan(PreviewControl, 7);
+            tableLayoutPanel1.SetRowSpan(PreviewControl, 8);
             PreviewControl.Size = new Size(1359, 1130);
             PreviewControl.TabIndex = 2;
             PreviewControl.TabStop = false;
@@ -289,6 +281,47 @@
             AbortButton.UseVisualStyleBackColor = false;
             AbortButton.Click += AbortButton_Click;
             // 
+            // tableLayoutPanel2
+            // 
+            tableLayoutPanel2.AutoSize = true;
+            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel2.Controls.Add(ZoomControl, 1, 0);
+            tableLayoutPanel2.Controls.Add(label7, 0, 0);
+            tableLayoutPanel2.Dock = DockStyle.Fill;
+            tableLayoutPanel2.Location = new Point(1572, 180);
+            tableLayoutPanel2.Margin = new Padding(0);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 1;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle());
+            tableLayoutPanel2.Size = new Size(286, 45);
+            tableLayoutPanel2.TabIndex = 4;
+            // 
+            // ZoomControl
+            // 
+            ZoomControl.AutoSize = true;
+            ZoomControl.DecimalPlaces = 2;
+            ZoomControl.Dock = DockStyle.Right;
+            ZoomControl.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            ZoomControl.Location = new Point(171, 3);
+            ZoomControl.Name = "ZoomControl";
+            ZoomControl.Size = new Size(112, 39);
+            ZoomControl.TabIndex = 1;
+            ZoomControl.TextAlign = HorizontalAlignment.Right;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Dock = DockStyle.Right;
+            label7.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            label7.Location = new Point(121, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(44, 45);
+            label7.TabIndex = 0;
+            label7.Text = "2^";
+            label7.TextAlign = ContentAlignment.MiddleRight;
+            // 
             // UI
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -306,9 +339,11 @@
             ((System.ComponentModel.ISupportInitialize)ViewOffsetAControl).EndInit();
             ((System.ComponentModel.ISupportInitialize)ViewOffsetBControl).EndInit();
             ((System.ComponentModel.ISupportInitialize)PaletteScaleControl).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ZoomControl).EndInit();
             ((System.ComponentModel.ISupportInitialize)ThreadsControl).EndInit();
             ((System.ComponentModel.ISupportInitialize)PreviewControl).EndInit();
+            tableLayoutPanel2.ResumeLayout(false);
+            tableLayoutPanel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)ZoomControl).EndInit();
             ResumeLayout(false);
         }
 
@@ -330,5 +365,7 @@
         private PictureBox PreviewControl;
         private Button RenderButton;
         private Button AbortButton;
+        private TableLayoutPanel tableLayoutPanel2;
+        private Label label7;
     }
 }

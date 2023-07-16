@@ -179,7 +179,7 @@ namespace YTBrotDemo
 
         private void PreviewControl_MouseWheel(object? sender, MouseEventArgs e)
         {
-            if(PreviewControl.Image != null)
+            if (PreviewControl.Image != null)
             {
                 zoomAdjust += e.Delta / (SystemInformation.MouseWheelScrollDelta * 10.0);
                 DrawZoomGuide(e.X, e.Y);
