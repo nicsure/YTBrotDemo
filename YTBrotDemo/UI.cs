@@ -8,7 +8,7 @@ namespace YTBrotDemo
     {
         private readonly Context context = new(CreatePalette(), Color.Black);
         private Task? previewTask = null;
-        private CancellationTokenSource? cts = null;
+        private CancellationTokenSource? tokenSource = null;
         private readonly Brush zoomGuideBrush = new SolidBrush(Color.FromArgb(50, 255, 255, 255));
 
         private int MaxIterations
@@ -85,10 +85,10 @@ namespace YTBrotDemo
         {
             Busy(true);
             SetContext();
-            using (cts = new())
+            using (tokenSource = new())
             {
-                using var task = Mandelbrot.Render(context, Threads, cts.Token);
-                PreviewControl.SetBackgroundBitmap(await task);
+                using var renderTask = Mandelbrot.Render(context, Threads, tokenSource.Token);
+                PreviewControl.SetBackgroundBitmap(await renderTask);
                 Busy(false);
             }
         }
@@ -118,7 +118,7 @@ namespace YTBrotDemo
 
         private void AbortButton_Click(object sender, EventArgs e)
         {
-            cts?.SafeCancel();
+            tokenSource?.SafeCancel();
         }
 
         private void PreviewControl_MouseClick(object sender, MouseEventArgs e)
