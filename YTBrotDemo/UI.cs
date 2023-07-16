@@ -1,5 +1,6 @@
 using System.Drawing;
 using System.IO.Compression;
+using System.Reflection.Metadata.Ecma335;
 
 namespace YTBrotDemo
 {
@@ -8,6 +9,7 @@ namespace YTBrotDemo
         private readonly Context context = new(CreatePalette(), Color.Black);
         private Task? previewTask = null;
         private CancellationTokenSource? cts = null;
+        private readonly Brush zoomGuideBrush = new SolidBrush(Color.FromArgb(50, 255, 255, 255));
 
         private int MaxIterations
         {
@@ -55,7 +57,7 @@ namespace YTBrotDemo
             //    red  255,  0,  0  ->  255,  0,254   magenta   r=m, g=0, b=i
             //magenta  255,  0,255  ->    1,  0,255   blue      r=d, g=0, b=m
             //   blue    0,  0,255  ->    0,254,266   cyan      r=0, g=i, b=m
-            //   cyan    0,255,255  ->    0,  1,  1   black     r=0, g=d, b=d
+            //   cyan    0,255,255  ->    0,  1,  1   black     r=0, g=d, b=d            
 
             var incr = Enumerable.Range(0, 255);
             var decr = Enumerable.Range(1, 255).Reverse();
@@ -85,7 +87,8 @@ namespace YTBrotDemo
             SetContext();
             using (cts = new())
             {
-                PreviewControl.BackgroundImage = await Mandelbrot.Render(context, Threads, cts.Token);
+                using var task = Mandelbrot.Render(context, Threads, cts.Token);
+                PreviewControl.SetBackgroundBitmap(await task);
                 Busy(false);
             }
         }
@@ -96,6 +99,11 @@ namespace YTBrotDemo
             {
                 previewTask = RenderSet();
             }
+        }
+
+        private void ClearZoomGuide()
+        {
+            PreviewControl.SetForegroundBitmap(null);
         }
 
         private void SetContext()
@@ -115,7 +123,6 @@ namespace YTBrotDemo
 
         private void PreviewControl_MouseClick(object sender, MouseEventArgs e)
         {
-            SetContext();
             switch (e.Button)
             {
                 default: return;
@@ -129,7 +136,26 @@ namespace YTBrotDemo
             var (a, b) = context.Transform(e.X, e.Y);
             ViewOffsetA = a;
             ViewOffsetB = b;
+            ClearZoomGuide();
             ShowPreview();
+        }
+
+        private void PreviewControl_MouseLeave(object sender, EventArgs e)
+        {
+            ClearZoomGuide();
+        }
+
+        private void PreviewControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            Bitmap bm = context.NewBitmap();
+            using Graphics g = Graphics.FromImage(bm);
+            g.FillRectangle(zoomGuideBrush, e.X - context.HalfWidth / 2, e.Y - context.HalfHeight / 2, context.HalfWidth, context.HalfHeight);
+            PreviewControl.SetForegroundBitmap(bm);          
+        }
+
+        private void PreviewControl_SizeChanged(object sender, EventArgs e)
+        {
+            SetContext();
         }
     }
 }

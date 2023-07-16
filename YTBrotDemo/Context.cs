@@ -15,6 +15,8 @@ namespace YTBrotDemo
 
         public int Width => width;
         public int Height => height;
+        public int HalfWidth => (int)hwidth;
+        public int HalfHeight => (int)hheight;
         public int MaxIt => maxIt;
 
         public Context(Color[] palette, Color inner)

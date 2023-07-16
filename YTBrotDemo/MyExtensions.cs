@@ -24,5 +24,22 @@ namespace YTBrotDemo
             try { cts.Cancel(); } catch (ObjectDisposedException) { }
         }
 
+        public static void SetBackgroundBitmap(this Control control, Bitmap? bm)
+        {
+            using (control.BackgroundImage)
+            {
+                control.BackgroundImage = bm;
+            }
+        }
+        public static void SetForegroundBitmap(this PictureBox control, Bitmap? bm)
+        {
+            using (control.Image)
+            {
+                control.Image = bm;
+            }
+        }
+
+
+
     }
 }

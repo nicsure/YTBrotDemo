@@ -256,7 +256,10 @@
             PreviewControl.Size = new Size(1359, 1130);
             PreviewControl.TabIndex = 2;
             PreviewControl.TabStop = false;
+            PreviewControl.SizeChanged += PreviewControl_SizeChanged;
             PreviewControl.MouseClick += PreviewControl_MouseClick;
+            PreviewControl.MouseLeave += PreviewControl_MouseLeave;
+            PreviewControl.MouseMove += PreviewControl_MouseMove;
             // 
             // RenderButton
             // 
