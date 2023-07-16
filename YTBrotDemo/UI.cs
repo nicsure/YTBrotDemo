@@ -6,6 +6,7 @@ namespace YTBrotDemo
 {
     public partial class UI : Form
     {
+        // FIELDS
         private readonly Context context = new(CreatePalette(), Color.Black);
         private Task? previewTask = null;
         private CancellationTokenSource? tokenSource = null;
@@ -14,6 +15,7 @@ namespace YTBrotDemo
         private readonly Pen zoomGuideWhiteBorderPen = new(Color.White);
         private double zoomAdjust = 1;
 
+        // PROPERTIES
         private int MaxIterations
         {
             get => (int)MaxIterationsControl.Value;
@@ -45,12 +47,14 @@ namespace YTBrotDemo
             set => ZoomControl.SafeSet((decimal)value);
         }
 
+        // CONSTRUCTORS
         public UI()
         {
             InitializeComponent();
             ShowPreview();
         }
 
+        // STATIC METHODS
         private static Color[] CreatePalette()
         {
             // black -> yellow -> red -> magenta -> blue -> cyan -> black
@@ -77,6 +81,7 @@ namespace YTBrotDemo
                 .ToArray();
         }
 
+        // UI MANIPULATION
         private void Busy(bool busy)
         {
             PreviewControl.Enabled = !busy;
@@ -84,6 +89,28 @@ namespace YTBrotDemo
             AbortButton.Enabled = busy;
         }
 
+        private void DrawZoomGuide(int x, int y)
+        {
+            Bitmap bm = context.NewBitmap();
+            using Graphics g = Graphics.FromImage(bm);
+            double zoomAdjustFactor = Math.Pow(2.0, zoomAdjust);
+            int zoomWidth = (int)(context.Width / zoomAdjustFactor);
+            int zoomHeight = (int)(context.Height / zoomAdjustFactor);
+            int topLeftX = x - zoomWidth / 2;
+            int topLeftY = y - zoomHeight / 2;
+            g.FillRectangle(zoomGuideRectangleBrush, topLeftX, topLeftY, zoomWidth, zoomHeight);
+            g.DrawRectangle(zoomGuideBlackBorderPen, topLeftX, topLeftY, zoomWidth, zoomHeight);
+            g.DrawRectangle(zoomGuideWhiteBorderPen, topLeftX + 1, topLeftY + 1, zoomWidth - 2, zoomHeight - 2);
+            PreviewControl.SetForegroundBitmap(bm);
+        }
+
+        private void ClearZoomGuide()
+        {
+            PreviewControl.SetForegroundBitmap(null);
+            zoomAdjust = 1;
+        }
+
+        // OPERATION
         private async Task RenderSet()
         {
             Busy(true);
@@ -104,17 +131,12 @@ namespace YTBrotDemo
             }
         }
 
-        private void ClearZoomGuide()
-        {
-            PreviewControl.SetForegroundBitmap(null);
-            zoomAdjust = 1;
-        }
-
         private void SetContext()
         {
             context.SetValues(PaletteScale, ViewOffsetA, ViewOffsetB, Zoom, PreviewControl.Width, PreviewControl.Height, MaxIterations);
         }
 
+        // EVENTS (Buttons)
         private void RenderButton_Click(object sender, EventArgs e)
         {
             ShowPreview();
@@ -125,6 +147,7 @@ namespace YTBrotDemo
             tokenSource?.SafeCancel();
         }
 
+        // EVENTS (Preview Window)
         private void PreviewControl_MouseClick(object sender, MouseEventArgs e)
         {
             switch (e.Button)
@@ -149,21 +172,6 @@ namespace YTBrotDemo
             ClearZoomGuide();
         }
 
-        private void DrawZoomGuide(int x, int y)
-        {
-            Bitmap bm = context.NewBitmap();
-            using Graphics g = Graphics.FromImage(bm);
-            double zoomAdjustFactor = Math.Pow(2.0, zoomAdjust);
-            int zoomWidth = (int)(context.Width / zoomAdjustFactor);
-            int zoomHeight = (int)(context.Height / zoomAdjustFactor);
-            int topLeftX = x - zoomWidth / 2;
-            int topLeftY = y - zoomHeight / 2;
-            g.FillRectangle(zoomGuideRectangleBrush, topLeftX, topLeftY, zoomWidth, zoomHeight);
-            g.DrawRectangle(zoomGuideBlackBorderPen, topLeftX, topLeftY, zoomWidth, zoomHeight);
-            g.DrawRectangle(zoomGuideWhiteBorderPen, topLeftX + 1, topLeftY + 1, zoomWidth - 2, zoomHeight - 2);
-            PreviewControl.SetForegroundBitmap(bm);
-        }
-
         private void PreviewControl_MouseMove(object sender, MouseEventArgs e)
         {
             DrawZoomGuide(e.X, e.Y);
@@ -183,6 +191,7 @@ namespace YTBrotDemo
             SetContext();
         }
 
+        // EVENTS (General)
         private void UI_Shown(object sender, EventArgs e)
         {
             PreviewControl.MouseWheel += PreviewControl_MouseWheel;

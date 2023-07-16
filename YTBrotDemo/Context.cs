@@ -8,23 +8,27 @@ namespace YTBrotDemo
 {
     internal class Context
     {
+        // FIELDS
         private double palScale, offsetA, offsetB, mag, hwidth, hheight;
         private int width, height, maxIt;
         private readonly Color[] palette;
         private readonly Color innerColor;
 
+        // PROPERTIES
         public int Width => width;
         public int Height => height;
         public int HalfWidth => (int)hwidth;
         public int HalfHeight => (int)hheight;
         public int MaxIt => maxIt;
 
+        // CONSTRUCTORS
         public Context(Color[] palette, Color inner)
         {
             this.palette = palette;
             this.innerColor = inner;
         }
 
+        // PUBLIC METHODS
         public void SetValues(double pscale, double offa, double offb, double zoom, int w, int h, int max)
         {
             palScale = pscale;
