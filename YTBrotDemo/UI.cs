@@ -10,6 +10,9 @@ namespace YTBrotDemo
         private Task? previewTask = null;
         private CancellationTokenSource? tokenSource = null;
         private readonly Brush zoomGuideBrush = new SolidBrush(Color.FromArgb(50, 255, 255, 255));
+        private readonly Pen blackPen = new(Color.Black);
+        private readonly Pen whitePen = new(Color.White);
+        private double zoomAdjust = 1;
 
         private int MaxIterations
         {
@@ -104,6 +107,7 @@ namespace YTBrotDemo
         private void ClearZoomGuide()
         {
             PreviewControl.SetForegroundBitmap(null);
+            zoomAdjust = 1;
         }
 
         private void SetContext()
@@ -127,7 +131,7 @@ namespace YTBrotDemo
             {
                 default: return;
                 case MouseButtons.Left:
-                    Zoom++;
+                    Zoom += zoomAdjust;
                     break;
                 case MouseButtons.Right:
                     Zoom--;
@@ -145,17 +149,43 @@ namespace YTBrotDemo
             ClearZoomGuide();
         }
 
-        private void PreviewControl_MouseMove(object sender, MouseEventArgs e)
+        private void DrawZoomGuide(int x, int y)
         {
             Bitmap bm = context.NewBitmap();
             using Graphics g = Graphics.FromImage(bm);
-            g.FillRectangle(zoomGuideBrush, e.X - context.HalfWidth / 2, e.Y - context.HalfHeight / 2, context.HalfWidth, context.HalfHeight);
-            PreviewControl.SetForegroundBitmap(bm);          
+            double zoomAdjustFactor = Math.Pow(2.0, zoomAdjust);
+            int zoomWidth = (int)(context.Width / zoomAdjustFactor);
+            int zoomHeight = (int)(context.Height / zoomAdjustFactor);
+            int topLeftX = x - zoomWidth / 2;
+            int topLeftY = y - zoomHeight / 2;
+            g.FillRectangle(zoomGuideBrush, topLeftX, topLeftY, zoomWidth, zoomHeight);
+            g.DrawRectangle(blackPen, topLeftX, topLeftY, zoomWidth, zoomHeight);
+            g.DrawRectangle(whitePen, topLeftX + 1, topLeftY + 1, zoomWidth - 2, zoomHeight - 2);
+            PreviewControl.SetForegroundBitmap(bm);
+        }
+
+        private void PreviewControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            DrawZoomGuide(e.X, e.Y);
+        }
+
+        private void PreviewControl_MouseWheel(object? sender, MouseEventArgs e)
+        {
+            if(PreviewControl.Image != null)
+            {
+                zoomAdjust += e.Delta / (SystemInformation.MouseWheelScrollDelta * 10.0);
+                DrawZoomGuide(e.X, e.Y);
+            }
         }
 
         private void PreviewControl_SizeChanged(object sender, EventArgs e)
         {
             SetContext();
+        }
+
+        private void UI_Shown(object sender, EventArgs e)
+        {
+            PreviewControl.MouseWheel += PreviewControl_MouseWheel;
         }
     }
 }

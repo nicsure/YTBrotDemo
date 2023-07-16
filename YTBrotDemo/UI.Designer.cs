@@ -299,6 +299,7 @@
             ForeColor = Color.White;
             Name = "UI";
             Text = "YouTube Mandelbrot Demo";
+            Shown += UI_Shown;
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)MaxIterationsControl).EndInit();
