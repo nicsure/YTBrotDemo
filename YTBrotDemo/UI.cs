@@ -9,9 +9,9 @@ namespace YTBrotDemo
         private readonly Context context = new(CreatePalette(), Color.Black);
         private Task? previewTask = null;
         private CancellationTokenSource? tokenSource = null;
-        private readonly Brush zoomGuideBrush = new SolidBrush(Color.FromArgb(50, 255, 255, 255));
-        private readonly Pen blackPen = new(Color.Black);
-        private readonly Pen whitePen = new(Color.White);
+        private readonly Brush zoomGuideRectangleBrush = new SolidBrush(Color.FromArgb(50, 255, 255, 255));
+        private readonly Pen zoomGuideBlackBorderPen = new(Color.Black);
+        private readonly Pen zoomGuideWhiteBorderPen = new(Color.White);
         private double zoomAdjust = 1;
 
         private int MaxIterations
@@ -158,9 +158,9 @@ namespace YTBrotDemo
             int zoomHeight = (int)(context.Height / zoomAdjustFactor);
             int topLeftX = x - zoomWidth / 2;
             int topLeftY = y - zoomHeight / 2;
-            g.FillRectangle(zoomGuideBrush, topLeftX, topLeftY, zoomWidth, zoomHeight);
-            g.DrawRectangle(blackPen, topLeftX, topLeftY, zoomWidth, zoomHeight);
-            g.DrawRectangle(whitePen, topLeftX + 1, topLeftY + 1, zoomWidth - 2, zoomHeight - 2);
+            g.FillRectangle(zoomGuideRectangleBrush, topLeftX, topLeftY, zoomWidth, zoomHeight);
+            g.DrawRectangle(zoomGuideBlackBorderPen, topLeftX, topLeftY, zoomWidth, zoomHeight);
+            g.DrawRectangle(zoomGuideWhiteBorderPen, topLeftX + 1, topLeftY + 1, zoomWidth - 2, zoomHeight - 2);
             PreviewControl.SetForegroundBitmap(bm);
         }
 
