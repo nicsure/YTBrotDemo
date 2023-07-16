@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            tableLayoutPanel1 = new TableLayoutPanel();
+            ControlsLayoutPanel = new TableLayoutPanel();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -46,7 +46,7 @@
             tableLayoutPanel2 = new TableLayoutPanel();
             ZoomControl = new NumericUpDown();
             label7 = new Label();
-            tableLayoutPanel1.SuspendLayout();
+            ControlsLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)MaxIterationsControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ViewOffsetAControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ViewOffsetBControl).BeginInit();
@@ -57,41 +57,42 @@
             ((System.ComponentModel.ISupportInitialize)ZoomControl).BeginInit();
             SuspendLayout();
             // 
-            // tableLayoutPanel1
+            // ControlsLayoutPanel
             // 
-            tableLayoutPanel1.ColumnCount = 3;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
-            tableLayoutPanel1.Controls.Add(label1, 1, 0);
-            tableLayoutPanel1.Controls.Add(label2, 1, 1);
-            tableLayoutPanel1.Controls.Add(label3, 1, 2);
-            tableLayoutPanel1.Controls.Add(label4, 1, 3);
-            tableLayoutPanel1.Controls.Add(label5, 1, 4);
-            tableLayoutPanel1.Controls.Add(label6, 1, 5);
-            tableLayoutPanel1.Controls.Add(MaxIterationsControl, 2, 0);
-            tableLayoutPanel1.Controls.Add(ViewOffsetAControl, 2, 1);
-            tableLayoutPanel1.Controls.Add(ViewOffsetBControl, 2, 2);
-            tableLayoutPanel1.Controls.Add(PaletteScaleControl, 2, 3);
-            tableLayoutPanel1.Controls.Add(ThreadsControl, 2, 5);
-            tableLayoutPanel1.Controls.Add(PreviewControl, 0, 0);
-            tableLayoutPanel1.Controls.Add(RenderButton, 2, 7);
-            tableLayoutPanel1.Controls.Add(AbortButton, 1, 7);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 2, 4);
-            tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 8;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.Size = new Size(1858, 1136);
-            tableLayoutPanel1.TabIndex = 0;
+            ControlsLayoutPanel.ColumnCount = 3;
+            ControlsLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            ControlsLayoutPanel.ColumnStyles.Add(new ColumnStyle());
+            ControlsLayoutPanel.ColumnStyles.Add(new ColumnStyle());
+            ControlsLayoutPanel.Controls.Add(label1, 1, 0);
+            ControlsLayoutPanel.Controls.Add(label2, 1, 1);
+            ControlsLayoutPanel.Controls.Add(label3, 1, 2);
+            ControlsLayoutPanel.Controls.Add(label4, 1, 3);
+            ControlsLayoutPanel.Controls.Add(label5, 1, 4);
+            ControlsLayoutPanel.Controls.Add(label6, 1, 5);
+            ControlsLayoutPanel.Controls.Add(MaxIterationsControl, 2, 0);
+            ControlsLayoutPanel.Controls.Add(ViewOffsetAControl, 2, 1);
+            ControlsLayoutPanel.Controls.Add(ViewOffsetBControl, 2, 2);
+            ControlsLayoutPanel.Controls.Add(PaletteScaleControl, 2, 3);
+            ControlsLayoutPanel.Controls.Add(ThreadsControl, 2, 5);
+            ControlsLayoutPanel.Controls.Add(PreviewControl, 0, 0);
+            ControlsLayoutPanel.Controls.Add(RenderButton, 2, 7);
+            ControlsLayoutPanel.Controls.Add(AbortButton, 1, 7);
+            ControlsLayoutPanel.Controls.Add(tableLayoutPanel2, 2, 4);
+            ControlsLayoutPanel.Dock = DockStyle.Fill;
+            ControlsLayoutPanel.Location = new Point(0, 0);
+            ControlsLayoutPanel.Margin = new Padding(5);
+            ControlsLayoutPanel.Name = "ControlsLayoutPanel";
+            ControlsLayoutPanel.RowCount = 8;
+            ControlsLayoutPanel.RowStyles.Add(new RowStyle());
+            ControlsLayoutPanel.RowStyles.Add(new RowStyle());
+            ControlsLayoutPanel.RowStyles.Add(new RowStyle());
+            ControlsLayoutPanel.RowStyles.Add(new RowStyle());
+            ControlsLayoutPanel.RowStyles.Add(new RowStyle());
+            ControlsLayoutPanel.RowStyles.Add(new RowStyle());
+            ControlsLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            ControlsLayoutPanel.RowStyles.Add(new RowStyle());
+            ControlsLayoutPanel.Size = new Size(1858, 1136);
+            ControlsLayoutPanel.TabIndex = 0;
             // 
             // label1
             // 
@@ -244,7 +245,7 @@
             PreviewControl.Dock = DockStyle.Fill;
             PreviewControl.Location = new Point(3, 3);
             PreviewControl.Name = "PreviewControl";
-            tableLayoutPanel1.SetRowSpan(PreviewControl, 8);
+            ControlsLayoutPanel.SetRowSpan(PreviewControl, 8);
             PreviewControl.Size = new Size(1359, 1130);
             PreviewControl.TabIndex = 2;
             PreviewControl.TabStop = false;
@@ -328,13 +329,13 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
             ClientSize = new Size(1858, 1136);
-            Controls.Add(tableLayoutPanel1);
+            Controls.Add(ControlsLayoutPanel);
             ForeColor = Color.White;
             Name = "UI";
             Text = "YouTube Mandelbrot Demo";
             Shown += UI_Shown;
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
+            ControlsLayoutPanel.ResumeLayout(false);
+            ControlsLayoutPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)MaxIterationsControl).EndInit();
             ((System.ComponentModel.ISupportInitialize)ViewOffsetAControl).EndInit();
             ((System.ComponentModel.ISupportInitialize)ViewOffsetBControl).EndInit();
@@ -349,7 +350,7 @@
 
         #endregion
 
-        private TableLayoutPanel tableLayoutPanel1;
+        private TableLayoutPanel ControlsLayoutPanel;
         private Label label1;
         private Label label2;
         private Label label3;
