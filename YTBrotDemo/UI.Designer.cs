@@ -40,21 +40,23 @@
             ViewOffsetBControl = new NumericUpDown();
             PaletteScaleControl = new NumericUpDown();
             ThreadsControl = new NumericUpDown();
-            PreviewControl = new PictureBox();
             RenderButton = new Button();
             AbortButton = new Button();
             tableLayoutPanel2 = new TableLayoutPanel();
             ZoomControl = new NumericUpDown();
             label7 = new Label();
+            PreviewPanel = new Panel();
+            PreviewControl = new PictureBox();
             ControlsLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)MaxIterationsControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ViewOffsetAControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ViewOffsetBControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PaletteScaleControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ThreadsControl).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)PreviewControl).BeginInit();
             tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ZoomControl).BeginInit();
+            PreviewPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)PreviewControl).BeginInit();
             SuspendLayout();
             // 
             // ControlsLayoutPanel
@@ -74,10 +76,10 @@
             ControlsLayoutPanel.Controls.Add(ViewOffsetBControl, 2, 2);
             ControlsLayoutPanel.Controls.Add(PaletteScaleControl, 2, 3);
             ControlsLayoutPanel.Controls.Add(ThreadsControl, 2, 5);
-            ControlsLayoutPanel.Controls.Add(PreviewControl, 0, 0);
             ControlsLayoutPanel.Controls.Add(RenderButton, 2, 7);
             ControlsLayoutPanel.Controls.Add(AbortButton, 1, 7);
             ControlsLayoutPanel.Controls.Add(tableLayoutPanel2, 2, 4);
+            ControlsLayoutPanel.Controls.Add(PreviewPanel, 0, 0);
             ControlsLayoutPanel.Dock = DockStyle.Fill;
             ControlsLayoutPanel.Location = new Point(0, 0);
             ControlsLayoutPanel.Margin = new Padding(5);
@@ -91,6 +93,12 @@
             ControlsLayoutPanel.RowStyles.Add(new RowStyle());
             ControlsLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             ControlsLayoutPanel.RowStyles.Add(new RowStyle());
+            ControlsLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            ControlsLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            ControlsLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            ControlsLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            ControlsLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            ControlsLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             ControlsLayoutPanel.Size = new Size(1858, 1136);
             ControlsLayoutPanel.TabIndex = 0;
             // 
@@ -237,23 +245,6 @@
             ThreadsControl.TextAlign = HorizontalAlignment.Right;
             ThreadsControl.Value = new decimal(new int[] { 4, 0, 0, 0 });
             // 
-            // PreviewControl
-            // 
-            PreviewControl.BackColor = Color.Black;
-            PreviewControl.BackgroundImageLayout = ImageLayout.Zoom;
-            PreviewControl.Cursor = Cursors.Cross;
-            PreviewControl.Dock = DockStyle.Fill;
-            PreviewControl.Location = new Point(3, 3);
-            PreviewControl.Name = "PreviewControl";
-            ControlsLayoutPanel.SetRowSpan(PreviewControl, 8);
-            PreviewControl.Size = new Size(1359, 1130);
-            PreviewControl.TabIndex = 2;
-            PreviewControl.TabStop = false;
-            PreviewControl.SizeChanged += PreviewControl_SizeChanged;
-            PreviewControl.MouseClick += PreviewControl_MouseClick;
-            PreviewControl.MouseLeave += PreviewControl_MouseLeave;
-            PreviewControl.MouseMove += PreviewControl_MouseMove;
-            // 
             // RenderButton
             // 
             RenderButton.BackColor = Color.FromArgb(64, 64, 64);
@@ -274,9 +265,9 @@
             AbortButton.Dock = DockStyle.Bottom;
             AbortButton.FlatStyle = FlatStyle.Flat;
             AbortButton.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
-            AbortButton.Location = new Point(1368, 1033);
+            AbortButton.Location = new Point(1397, 1033);
             AbortButton.Name = "AbortButton";
-            AbortButton.Size = new Size(201, 100);
+            AbortButton.Size = new Size(172, 100);
             AbortButton.TabIndex = 3;
             AbortButton.Text = "Abort";
             AbortButton.UseVisualStyleBackColor = false;
@@ -323,6 +314,34 @@
             label7.Text = "2^";
             label7.TextAlign = ContentAlignment.MiddleRight;
             // 
+            // PreviewPanel
+            // 
+            PreviewPanel.Controls.Add(PreviewControl);
+            PreviewPanel.Dock = DockStyle.Fill;
+            PreviewPanel.Location = new Point(0, 0);
+            PreviewPanel.Margin = new Padding(0);
+            PreviewPanel.Name = "PreviewPanel";
+            ControlsLayoutPanel.SetRowSpan(PreviewPanel, 8);
+            PreviewPanel.Size = new Size(1394, 1136);
+            PreviewPanel.TabIndex = 5;
+            // 
+            // PreviewControl
+            // 
+            PreviewControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            PreviewControl.BackColor = Color.Black;
+            PreviewControl.BackgroundImageLayout = ImageLayout.Zoom;
+            PreviewControl.Cursor = Cursors.Cross;
+            PreviewControl.Location = new Point(0, 0);
+            PreviewControl.Margin = new Padding(0);
+            PreviewControl.Name = "PreviewControl";
+            PreviewControl.Size = new Size(1394, 1136);
+            PreviewControl.TabIndex = 2;
+            PreviewControl.TabStop = false;
+            PreviewControl.SizeChanged += PreviewControl_SizeChanged;
+            PreviewControl.MouseClick += PreviewControl_MouseClick;
+            PreviewControl.MouseLeave += PreviewControl_MouseLeave;
+            PreviewControl.MouseMove += PreviewControl_MouseMove;
+            // 
             // UI
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -331,9 +350,11 @@
             ClientSize = new Size(1858, 1136);
             Controls.Add(ControlsLayoutPanel);
             ForeColor = Color.White;
+            KeyPreview = true;
             Name = "UI";
             Text = "YouTube Mandelbrot Demo";
             Shown += UI_Shown;
+            KeyDown += UI_KeyDown;
             ControlsLayoutPanel.ResumeLayout(false);
             ControlsLayoutPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)MaxIterationsControl).EndInit();
@@ -341,10 +362,11 @@
             ((System.ComponentModel.ISupportInitialize)ViewOffsetBControl).EndInit();
             ((System.ComponentModel.ISupportInitialize)PaletteScaleControl).EndInit();
             ((System.ComponentModel.ISupportInitialize)ThreadsControl).EndInit();
-            ((System.ComponentModel.ISupportInitialize)PreviewControl).EndInit();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)ZoomControl).EndInit();
+            PreviewPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)PreviewControl).EndInit();
             ResumeLayout(false);
         }
 
@@ -368,5 +390,6 @@
         private Button AbortButton;
         private TableLayoutPanel tableLayoutPanel2;
         private Label label7;
+        private Panel PreviewPanel;
     }
 }

@@ -1,6 +1,7 @@
 using System.Drawing;
 using System.IO.Compression;
 using System.Reflection.Metadata.Ecma335;
+using System.Transactions;
 
 namespace YTBrotDemo
 {
@@ -10,10 +11,11 @@ namespace YTBrotDemo
         private readonly Context context = new(CreatePalette(), Color.Black);
         private Task? previewTask = null;
         private CancellationTokenSource? tokenSource = null;
-        private readonly Brush zoomGuideRectangleBrush = new SolidBrush(Color.FromArgb(50, 255, 255, 255));
-        private readonly Pen zoomGuideBlackBorderPen = new(Color.Black);
-        private readonly Pen zoomGuideWhiteBorderPen = new(Color.White);
         private double zoomAdjust = 1;
+        private readonly ZoomGuide zoomGuide = new();
+
+        // STATIC FIELDS
+        private static readonly double zoomStepFactor = SystemInformation.MouseWheelScrollDelta * 10.0;
 
         // PROPERTIES
         private int MaxIterations
@@ -89,24 +91,16 @@ namespace YTBrotDemo
             AbortButton.Enabled = busy;
         }
 
-        private void DrawZoomGuide(int x, int y)
+        private void DrawZoomGuide(double delta, int x, int y)
         {
-            Bitmap bm = context.NewBitmap();
-            using Graphics g = Graphics.FromImage(bm);
-            double zoomAdjustFactor = Math.Pow(2.0, zoomAdjust);
-            int zoomWidth = (int)(context.Width / zoomAdjustFactor);
-            int zoomHeight = (int)(context.Height / zoomAdjustFactor);
-            int topLeftX = x - zoomWidth / 2;
-            int topLeftY = y - zoomHeight / 2;
-            g.FillRectangle(zoomGuideRectangleBrush, topLeftX, topLeftY, zoomWidth, zoomHeight);
-            g.DrawRectangle(zoomGuideBlackBorderPen, topLeftX, topLeftY, zoomWidth, zoomHeight);
-            g.DrawRectangle(zoomGuideWhiteBorderPen, topLeftX + 1, topLeftY + 1, zoomWidth - 2, zoomHeight - 2);
-            PreviewControl.SetForegroundBitmap(bm);
+            zoomAdjust += delta;
+            zoomGuide.Update(x, y, Math.Pow(2.0, zoomAdjust));
+            zoomGuide.Visible = true;
         }
 
         private void ClearZoomGuide()
         {
-            PreviewControl.SetForegroundBitmap(null);
+            zoomGuide.Visible = false;
             zoomAdjust = 1;
         }
 
@@ -174,27 +168,49 @@ namespace YTBrotDemo
 
         private void PreviewControl_MouseMove(object sender, MouseEventArgs e)
         {
-            DrawZoomGuide(e.X, e.Y);
+            DrawZoomGuide(0, e.X, e.Y);
         }
 
         private void PreviewControl_MouseWheel(object? sender, MouseEventArgs e)
         {
-            if (PreviewControl.Image != null)
-            {
-                zoomAdjust += e.Delta / (SystemInformation.MouseWheelScrollDelta * 10.0);
-                DrawZoomGuide(e.X, e.Y);
-            }
+            DrawZoomGuide(e.Delta / zoomStepFactor, e.X, e.Y);
         }
 
         private void PreviewControl_SizeChanged(object sender, EventArgs e)
         {
             SetContext();
+            PreviewControl.SetForegroundBitmap(context.NewBitmap());
+        }
+
+        //EVENTS (UI)
+        private void UI_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (zoomGuide.Visible)
+            {
+                e.Handled = true;
+                double delta;
+                switch (e.KeyCode)
+                {
+                    default: return;
+                    case Keys.Up:
+                        delta = 0.1;
+                        break;
+                    case Keys.Down:
+                        delta = -0.1;
+                        break;
+                }
+                DrawZoomGuide(delta, zoomGuide.Left, zoomGuide.Top);
+            }
         }
 
         // EVENTS (General)
         private void UI_Shown(object sender, EventArgs e)
         {
+            PreviewPanel.Controls.Add(zoomGuide);
+            zoomGuide.Visible = false;
             PreviewControl.MouseWheel += PreviewControl_MouseWheel;
         }
+
+
     }
 }
