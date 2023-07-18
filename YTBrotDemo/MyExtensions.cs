@@ -31,14 +31,22 @@ namespace YTBrotDemo
                 control.BackgroundImage = bm;
             }
         }
+
         public static void SetForegroundBitmap(this PictureBox control, Bitmap? bm)
         {
             using (control.Image)
             {
                 control.Image = bm;
-            }
+            }            
         }
 
+        public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
+        {
+            foreach (var item in source)
+            {
+                action(item);
+            }
+        }
 
 
     }

@@ -28,15 +28,15 @@ namespace YTBrotDemo
             get => (int)ThreadsControl.Value;
             set => ThreadsControl.SafeSet(value);
         }
-        private double ViewOffsetA
+        private decimal ViewOffsetA
         {
-            get => (double)ViewOffsetAControl.Value;
-            set => ViewOffsetAControl.SafeSet((decimal)value);
+            get => ViewOffsetAControl.Value;
+            set => ViewOffsetAControl.SafeSet(value);
         }
-        private double ViewOffsetB
+        private decimal ViewOffsetB
         {
-            get => (double)ViewOffsetBControl.Value;
-            set => ViewOffsetBControl.SafeSet((decimal)value);
+            get => ViewOffsetBControl.Value;
+            set => ViewOffsetBControl.SafeSet(value);
         }
         private double PaletteScale
         {
@@ -130,6 +130,16 @@ namespace YTBrotDemo
             context.SetValues(PaletteScale, ViewOffsetA, ViewOffsetB, Zoom, PreviewControl.Width, PreviewControl.Height, MaxIterations);
         }
 
+        private void Magnify(double zoomDelta, int x, int y)
+        {
+            Zoom += zoomDelta;
+            var (a, b) = context.TransformHP(x, y);
+            ViewOffsetA = a;
+            ViewOffsetB = b;
+            ClearZoomGuide();
+            ShowPreview();
+        }
+
         // EVENTS (Buttons)
         private void RenderButton_Click(object sender, EventArgs e)
         {
@@ -144,21 +154,18 @@ namespace YTBrotDemo
         // EVENTS (Preview Window)
         private void PreviewControl_MouseClick(object sender, MouseEventArgs e)
         {
+            double zoomDelta;
             switch (e.Button)
             {
                 default: return;
                 case MouseButtons.Left:
-                    Zoom += zoomAdjust;
+                    zoomDelta = zoomAdjust;
                     break;
                 case MouseButtons.Right:
-                    Zoom--;
+                    zoomDelta = -1;
                     break;
             }
-            var (a, b) = context.Transform(e.X, e.Y);
-            ViewOffsetA = a;
-            ViewOffsetB = b;
-            ClearZoomGuide();
-            ShowPreview();
+            Magnify(zoomDelta, e.X, e.Y);
         }
 
         private void PreviewControl_MouseLeave(object sender, EventArgs e)
@@ -198,12 +205,14 @@ namespace YTBrotDemo
                     case Keys.Down:
                         delta = -0.1;
                         break;
+                    case Keys.Enter:
+                        Magnify(zoomAdjust, zoomGuide.Left, zoomGuide.Top);
+                        return;
                 }
                 DrawZoomGuide(delta, zoomGuide.Left, zoomGuide.Top);
             }
         }
 
-        // EVENTS (General)
         private void UI_Shown(object sender, EventArgs e)
         {
             PreviewPanel.Controls.Add(zoomGuide);

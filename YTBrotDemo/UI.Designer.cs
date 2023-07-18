@@ -296,9 +296,11 @@
             ZoomControl.DecimalPlaces = 2;
             ZoomControl.Dock = DockStyle.Right;
             ZoomControl.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            ZoomControl.Location = new Point(171, 3);
+            ZoomControl.Location = new Point(185, 3);
+            ZoomControl.Maximum = new decimal(new int[] { 87, 0, 0, 0 });
+            ZoomControl.Minimum = new decimal(new int[] { 87, 0, 0, int.MinValue });
             ZoomControl.Name = "ZoomControl";
-            ZoomControl.Size = new Size(112, 39);
+            ZoomControl.Size = new Size(98, 39);
             ZoomControl.TabIndex = 1;
             ZoomControl.TextAlign = HorizontalAlignment.Right;
             // 
@@ -307,7 +309,7 @@
             label7.AutoSize = true;
             label7.Dock = DockStyle.Right;
             label7.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label7.Location = new Point(121, 0);
+            label7.Location = new Point(135, 0);
             label7.Name = "label7";
             label7.Size = new Size(44, 45);
             label7.TabIndex = 0;

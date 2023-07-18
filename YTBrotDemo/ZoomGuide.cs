@@ -9,8 +9,8 @@ namespace YTBrotDemo
 {
     internal class ZoomGuide : Control
     {
-        private readonly Panel left = new(), right = new(), top = new(), bottom = new();
         private Control? parent = null;
+        private readonly List<Panel> panels = new() { new(), new(), new(), new() };
 
         public ZoomGuide() : base()
         {
@@ -20,33 +20,20 @@ namespace YTBrotDemo
 
         private void ZoomGuide_VisibleChanged(object? sender, EventArgs e)
         {
-            top.Visible = bottom.Visible = left.Visible = right.Visible = Visible;
+            panels.ForEach(panel => panel.Visible = Visible);
         }
 
         private void ZoomGuide_ParentChanged(object? sender, EventArgs e)
         {
-            if (parent != null)
-            {
-                parent.Controls.Remove(left);
-                parent.Controls.Remove(right);
-                parent.Controls.Remove(top);
-                parent.Controls.Remove(bottom);
-            }
+            panels.ForEach(panel => {
+                parent?.Controls.Remove(panel);
+                Parent.Controls.Add(panel);
+                panel.Width = panel.Height = 2;
+                panel.BringToFront();
+                panel.BackColor = Color.White;
+            });
             parent = Parent;
-            parent.Controls.Add(left);
-            parent.Controls.Add(right);
-            parent.Controls.Add(top);
-            parent.Controls.Add(bottom);
-            left.Width = right.Width = 1;
-            top.Height = bottom.Height = 1;
-            top.BringToFront();
-            bottom.BringToFront();
-            left.BringToFront();
-            right.BringToFront();
-            top.BackColor = bottom.BackColor = left.BackColor = right.BackColor = Color.White;
         }
-
-        public void Update(double scale) => Update(Left, Top, scale);
 
         public void Update(int x, int y, double scale)
         {
@@ -56,14 +43,14 @@ namespace YTBrotDemo
                 Top = y;
                 double zw = parent.Width / scale;
                 double zh = parent.Height / scale;
-                top.Width = bottom.Width = (int)zw;
-                left.Height = right.Height = (int)zh;
                 int hw = (int)(zw / 2.0);
                 int hh = (int)(zh / 2.0);
-                left.Left = bottom.Left = top.Left = x - hw;
-                left.Top = right.Top = top.Top = y - hh;
-                right.Left = x + hw;
-                bottom.Top = y + hh;
+                panels[2].Width = panels[3].Width = (int)zw;
+                panels[0].Height = panels[1].Height = (int)zh;
+                panels[0].Left = panels[3].Left = panels[2].Left = x - hw;
+                panels[0].Top = panels[1].Top = panels[2].Top = y - hh;
+                panels[1].Left = x + hw;
+                panels[3].Top = y + hh;
             }
         }
     }
